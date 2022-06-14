@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChannelController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UploadVideoController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('channels', ChannelController::class);
 
-Route::resource('channels/{channel}/subscriptions', SubscriptionController::class)->only(['store', 'destroy'])->middleware(['auth']);
+Route::get('videos/{video}', [VideoController::class, 'show']);
+
+//Route::resource('channels/{channel}/subscriptions', SubscriptionController::class)->only(['store', 'destroy'])->middleware(['auth']);
                              
-Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
+//Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('channels/{channel}/videos', [UploadVideoController::class, 'store']);
+    Route::get('channels/{channel}/videos', [UploadVideoController::class, 'index'])->name('channel.upload');
+    // Route::resource('channels/{channel}/subscriptions', 'SubscriptionController')->only(['store', 'destroy']);
+    Route::resource('channels/{channel}/subscriptions', SubscriptionController::class)->only(['store', 'destroy']);
+});
