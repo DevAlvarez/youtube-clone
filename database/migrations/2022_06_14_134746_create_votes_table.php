@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('votes', function (Blueprint $table) {
             $table->uuid('id');
-            $table->uuid('channel_id');
-            $table->bigInteger('views')->default(0);
-            $table->string('thumbnail')->nullable();
-            $table->integer('percentage')->nullable();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('path');
+            $table->enum('type', ['up', 'down'])->default('up');
+            $table->string('voteable_type');
+            $table->uuid('voteable_id');
+            $table->uuid('user_id');
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('votes');
     }
 };
