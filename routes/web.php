@@ -37,7 +37,9 @@ Route::post('votes/{entityId}/{type}', [VoteController::class, 'vote']);
 
 Route::resource('channels', ChannelController::class);
 
-Route::get('videos/{video}', [VideoController::class, 'show']);
+// Route::get('videos/{video}', [VideoController::class, 'show']);
+
+Route::get('videos/{video}', [VideoController::class, 'show'])->name('videos.show');
 
 Route::put('videos/{video}', [VideoController::class, 'updateViews']);
 
