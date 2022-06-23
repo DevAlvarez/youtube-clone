@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Channel;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

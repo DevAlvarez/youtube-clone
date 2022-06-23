@@ -6,6 +6,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UploadVideoController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,13 +31,19 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('votes/{video}/{type}', [VoteController::class, 'vote']);
+// Route::post('votes/{video}/{type}', [VoteController::class, 'vote']);
+
+Route::post('votes/{entityId}/{type}', [VoteController::class, 'vote']);
 
 Route::resource('channels', ChannelController::class);
 
 Route::get('videos/{video}', [VideoController::class, 'show']);
 
 Route::put('videos/{video}', [VideoController::class, 'updateViews']);
+
+Route::get('videos/{video}/comments', [CommentController::class, 'index']);
+
+Route::get('comments/{comment}/replies', [CommentController::class, 'show']);
 
 Route::put('videos/{video}/update', [VideoController::class, 'update'])->middleware(['auth'])->name('videos.update');
 
